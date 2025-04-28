@@ -4,10 +4,14 @@
   "main": "index.js",
   "author": "roneysilvabuildmate <roney.silva@buildmate.com.br>",
   "license": "MIT",
+  "scripts": {
+    "dev": "tsnd --respawn --transpile-only /src server.ts"
+  },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
