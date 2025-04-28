@@ -1,0 +1,14 @@
+{
+  "name": "url-shortener-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "roneysilvabuildmate <roney.silva@buildmate.com.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "prisma": "^6.6.0"
+  }
+}
