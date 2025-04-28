@@ -9,5 +9,7 @@ function bootstrap() {
 
     app.use(cors(corsOptions))
 
+    
+
     app.listen(port, () => console.log("Server running on: " + port))
 }
