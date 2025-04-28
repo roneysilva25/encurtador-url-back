@@ -5,7 +5,8 @@
   "author": "roneysilvabuildmate <roney.silva@buildmate.com.br>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only /src server.ts"
+    "dev": "tsnd --respawn --transpile-only /src server.ts",
+    "build": "tsc ./src && cp .env ./dist/.env"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
