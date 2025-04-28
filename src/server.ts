@@ -1,7 +1,10 @@
 import express from "express"
+import "express-async-errors"
 import cors from "cors"
 import "dotenv/config"
 import { corsOptions } from "./config/corsOptions"
+import { routes } from "./routes"
+import { errorHandler } from "./middlewares/errorHandler"
 
 function bootstrap() {
     const app = express()
@@ -9,7 +12,9 @@ function bootstrap() {
 
     app.use(cors(corsOptions))
 
-    
+    app.use(routes)
+
+    app.use(errorHandler)
 
     app.listen(port, () => console.log("Server running on: " + port))
 }
