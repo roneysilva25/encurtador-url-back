@@ -17,18 +17,18 @@ datasource db {
 model Url {
   id               String   @id @default(uuid())
   originalUrl      String
-  shortenedUrlCode String
+  shortenedUrlCode String   @unique
   createdAt        DateTime @default(now())
-  updatedAt        DateTime @default(updatedAt())
-  metadata         UrlMetadata
+  updatedAt        DateTime @updatedAt
+  metadata         UrlMetadata?
 }
 
 model UrlMetadata {
   id             String   @id @default(uuid())
-  urlId          String
+  urlId          String   @unique
   active         Boolean  @default(true)
   numberOfClicks Int      @default(0)    
-  lastClicked    Date
+  lastClicked    DateTime?
   url            Url      @relation(fields: [urlId], references: [id])
-  validThru      Date
+  validThru      DateTime
 }
