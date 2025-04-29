@@ -7,7 +7,7 @@ interface IIsUrlStillValid {
 }
 
 export class UrlValidityService {
-    private hasUrlAnyMetadata(urlMetadata: UrlMetadata | null) {
+    private hasUrlAnyMetadata(urlMetadata: UrlMetadata | null | undefined) {
         return !!urlMetadata
     }
 
@@ -38,7 +38,7 @@ export class UrlValidityService {
             }
         })
 
-        
+        const metadata = this.hasUrlAnyMetadata(url.metadata)
 
     }
 }
