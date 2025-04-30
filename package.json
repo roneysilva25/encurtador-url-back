@@ -5,6 +5,7 @@
   "author": "roneysilvabuildmate <roney.silva@buildmate.com.br>",
   "license": "MIT",
   "scripts": {
+    "prisma:push": "npx prisma db push",
     "dev": "tsnd --respawn --transpile-only src/server.ts",
     "build": "tsc ./src && cp .env ./dist/.env"
   },

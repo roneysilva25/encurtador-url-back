@@ -7,9 +7,9 @@ export function errorHandler(err: any, req: Request, res: Response, next: NextFu
         res.status(400).json({
             message: errObj.message
         })
+    } else {
+        res.status(500).json({
+            message: "Houve um erro inesperado"
+        })
     }
-    
-    res.status(500).json({
-        message: "Houve um erro inesperado"
-    })
 }

@@ -1,5 +1,5 @@
 import { prisma } from "../../../database/prisma"
-import { get30DaysAheadFromDate } from "../../../utils/get-30-days-ahead-from-date"
+import { getDate30DaysAheadFromDate } from "../../../utils/get-date-30-days-ahead-from-date"
 import { getRandomCode } from "../../../utils/get-random-code"
 import { GenerateUniqueCodeService } from "./services/GenerateUniqueCodeService"
 
@@ -23,7 +23,7 @@ export class CreateUrlUseCase {
                 originalUrl: urlToShorten,
                 metadata: {
                     create: {
-                        validThru: get30DaysAheadFromDate(new Date())
+                        validThru: getDate30DaysAheadFromDate(new Date())
                     }
                 }
             }

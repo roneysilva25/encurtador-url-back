@@ -1,44 +1,43 @@
-import { UrlMetadata } from "@prisma/client"
 import { prisma } from "../../../../database/prisma"
 import { thirtyDaysInMs } from "../../../../utils/thirty-days-in-ms"
-
-interface IIsUrlStillValid {
-    id: string
-}
+import { Url, UrlMetadata } from "../../../../../generated/prisma"
+import { getDate30DaysAheadFromDate } from "../../../../utils/get-date-30-days-ahead-from-date"
 
 export class UrlValidityService {
-    private hasUrlAnyMetadata(urlMetadata: UrlMetadata | null | undefined) {
-        return !!urlMetadata
-    }
-
-    private hasLastClickBeenMoreThan30DaysAgo(lastClicked: Date) {
-        const todaysDateInMs = new Date().getTime()
-        const lastClickedInMs = lastClicked.getTime()
-        return (todaysDateInMs - lastClickedInMs) > thirtyDaysInMs
-    }
-
-    private hasUrlEverBeenClicked(urlMetadata: UrlMetadata) {
-        return !!urlMetadata.lastClicked
-    }
-
-    private isUrlPastValidDate(urlMetadata: UrlMetadata) {
+    private isURLPastValidDate(validThru: Date) {
         const todaysDate = new Date()
-        return todaysDate > urlMetadata.validThru 
+        return todaysDate > validThru
     }
 
-    async isUrlStillValid({
-        id
-    }: IIsUrlStillValid) {
-        const url = await prisma.url.findFirst({
+    private async getUrlMetadata(urlId: string) {
+        const metadata = await prisma.urlMetadata.findFirst({ where: { urlId } }) 
+        if (!metadata) {
+            throw new Error("A URL não possui metadados")
+        }
+        return metadata
+    }
+
+    public async isURLStillValid(urlId: string) {
+        const metadata = await this.getUrlMetadata(urlId)
+        return !this.isURLPastValidDate(metadata.validThru)
+    }
+
+    public async renewValidityBy30Days(urlId: string) {
+        return await prisma.urlMetadata.update({
             where: {
-                id
+                urlId
             },
-            include: {
-                metadata: true
+            data: {
+                validThru: getDate30DaysAheadFromDate(new Date()),
+                lastClicked: new Date(),
+                numberOfClicks: {
+                    increment: 1
+                }
             }
         })
+    }
 
-        const metadata = this.hasUrlAnyMetadata(url.metadata)
-
+    public async deletePastValidUrl(pastValidUrlId: string) {
+        return await prisma.url.delete({ where: { id: pastValidUrlId } })
     }
 }
