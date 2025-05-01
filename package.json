@@ -9,7 +9,7 @@
     "dev": "tsnd --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "vercel-build": "npx prisma generate --no-engine && tsc",
-    "start": "node server.js"
+    "start": "node ./dist/server.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
