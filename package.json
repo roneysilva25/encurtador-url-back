@@ -7,8 +7,7 @@
   "scripts": {
     "prisma:push": "npx prisma db push",
     "dev": "tsnd --respawn --transpile-only src/server.ts",
-    "build": "tsc",
-    "vercel-build": "npx prisma generate --no-engine && tsc",
+    "build": "npx prisma generate --no-engine && tsc",
     "start": "node ./dist/server.js"
   },
   "devDependencies": {
