@@ -201,6 +201,11 @@
   dependencies:
     "@prisma/debug" "6.6.0"
 
+"@roneysilva25/rate-limiter@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@roneysilva25/rate-limiter/-/rate-limiter-1.0.3.tgz#1cc8e679fc89c23c289a45168d09eb633753a4bd"
+  integrity sha512-EOXiWnsxPnKIibG2g02c2ADKaKHQPyZQL3DpRosqESPUEdmMaqvmaPeXE98eaLicGamc18Tq3AlJh/v6NGnDvw==
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.11.tgz#6ee46400685f130e278128c7b38b7e031ff5b2f2"

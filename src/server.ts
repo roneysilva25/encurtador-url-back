@@ -7,12 +7,16 @@ import { corsOptions } from "./config/corsOptions"
 import { routes } from "./routes"
 import { errorHandler } from "./middlewares/errorHandler"
 import bodyParser from "body-parser"
+import { rateLimiter } from "@roneysilva25/rate-limiter"
 
 function bootstrap() {
     const app = express()
     const port = Number(process.env.PORT)
+    const rateLimit = rateLimiter({});
 
     app.use(cors(corsOptions))
+
+    app.use(rateLimit.limit);
 
     app.use(bodyParser.json({ "limit": "1mb" }))
 
