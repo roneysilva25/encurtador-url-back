@@ -1,7 +1,6 @@
 import { prisma } from "../../../../database/prisma"
-import { thirtyDaysInMs } from "../../../../utils/thirty-days-in-ms"
-import { Url, UrlMetadata } from "../../../../../generated/prisma"
 import { getDate30DaysAheadFromDate } from "../../../../utils/get-date-30-days-ahead-from-date"
+import { InternalError } from "../../../../errors"
 
 export class UrlValidityService {
     private isURLPastValidDate(validThru: Date) {
@@ -12,7 +11,7 @@ export class UrlValidityService {
     private async getUrlMetadata(urlId: string) {
         const metadata = await prisma.urlMetadata.findFirst({ where: { urlId } }) 
         if (!metadata) {
-            throw new Error("A URL não possui metadados")
+            throw new InternalError("A URL não possui metadados");
         }
         return metadata
     }

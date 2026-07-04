@@ -1,6 +1,5 @@
 import { prisma } from "../../../database/prisma"
 import { getDate30DaysAheadFromDate } from "../../../utils/get-date-30-days-ahead-from-date"
-import { getRandomCode } from "../../../utils/get-random-code"
 import { GenerateUniqueCodeService } from "./services/GenerateUniqueCodeService"
 
 interface ICreateUrlUseCase {

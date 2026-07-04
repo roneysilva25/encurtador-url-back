@@ -1,4 +1,5 @@
 import { prisma } from "../../../../database/prisma"
+import { InternalError } from "../../../../errors"
 import { getRandomCode } from "../../../../utils/get-random-code"
 
 export class GenerateUniqueCodeService {
@@ -20,7 +21,7 @@ export class GenerateUniqueCodeService {
         } while (codeExists)
         
         if (code === '') {
-            throw new Error("Não foi possível gerar um código único")
+            throw new InternalError("Não foi possível gerar um código único")
         }
 
         return code

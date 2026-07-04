@@ -1,6 +1,7 @@
 import { object, string } from "yup";
 import { CreateUrlUseCase } from "./CreateUrlUseCase";
 import { Request, Response } from "express";
+import { validate } from "../../../utils/validate";
 
 export class CreateUrlController {
     async handle(req: Request, res: Response) {
@@ -15,9 +16,7 @@ export class CreateUrlController {
                 .required("A URL a ser encurtada é obrigatória")
         })
 
-        const data = await schema.validate({
-            urlToShorten
-        });
+        const data = await validate(schema, { urlToShorten });
         
         const createUrlUseCase = new CreateUrlUseCase()
         const result = await createUrlUseCase.execute(data)

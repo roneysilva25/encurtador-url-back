@@ -1,4 +1,5 @@
 import { prisma } from "../../../database/prisma"
+import { NotFoundError, UrlExpiredError } from "../../../errors";
 import { UrlValidityService } from "./services/UrlValidityService";
 
 interface IFindUrlUseCase {
@@ -15,7 +16,14 @@ export class FindUrlUseCase {
                 metadata: {
                     active: true
                 }
-            }
+            },
+            include: {
+                metadata: {
+                    select: {
+                        validThru: true,
+                    },
+                },
+            },
         });
     } 
 
@@ -25,14 +33,17 @@ export class FindUrlUseCase {
         const foundUrl = await this.getUrlByCode(code)
 
         if (!foundUrl) {
-            throw new Error("URL não encontrada")
+            throw new NotFoundError("URL não encontrada")
         }
 
         const isURLStillValid = await this.urlValidityService.isURLStillValid(foundUrl.id)
 
         if (!isURLStillValid) {
             this.urlValidityService.deletePastValidUrl(foundUrl.id)
-            throw new Error("URL não encontrada")
+            throw new UrlExpiredError(undefined, { 
+                urlId: foundUrl.id,
+                expiredAt: foundUrl.metadata?.validThru,
+            });
         }
 
         this.urlValidityService.renewValidityBy30Days(foundUrl.id)
