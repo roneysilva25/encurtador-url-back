@@ -40,6 +40,8 @@ export class FindUrlUseCase {
 
         if (!isURLStillValid) {
             this.urlValidityService.deletePastValidUrl(foundUrl.id)
+            .catch((reason) => console.warn("Falha ao deletar URL fora da validade.", reason));
+
             throw new UrlExpiredError(undefined, { 
                 urlId: foundUrl.id,
                 expiredAt: foundUrl.metadata?.validThru,
@@ -47,6 +49,7 @@ export class FindUrlUseCase {
         }
 
         this.urlValidityService.renewValidityBy30Days(foundUrl.id)
+        .catch((reason) => console.warn("Falha ao renovar URL.", reason));
         
         return foundUrl
     }

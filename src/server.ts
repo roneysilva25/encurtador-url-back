@@ -8,6 +8,12 @@ import { routes } from "./routes"
 import { errorHandler } from "./middlewares/errorHandler"
 import bodyParser from "body-parser"
 import { rateLimiter } from "@roneysilva25/rate-limiter"
+import { registerShutdownHandlers } from "./shutdown"
+import { Server } from "http"
+
+let server: Server;
+
+registerShutdownHandlers();
 
 function bootstrap() {
     const app = express()
@@ -24,7 +30,12 @@ function bootstrap() {
 
     app.use(errorHandler)
 
-    app.listen(port, () => console.log("Server running on: " + port))
+    server = app.listen(port, () => console.log("Server running on: " + port));
 }
 
-bootstrap();
+try {
+    bootstrap();
+} catch (error) {
+    console.error("Erro ao inicializar a aplicação.", { error });
+    process.exit(1);
+}
